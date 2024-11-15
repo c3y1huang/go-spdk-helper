@@ -18,6 +18,7 @@ type Xattr struct {
 const (
 	UserCreated       = "user_created"
 	SnapshotTimestamp = "snapshot_timestamp"
+	SnapshotLabels    = "snapshot_labels"
 )
 
 // BdevGetBdevs get information about block devices (bdevs).
