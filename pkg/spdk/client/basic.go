@@ -286,16 +286,24 @@ func (c *Client) BdevLvolGetWithFilter(name string, timeout uint64, filter func(
 		if !filter(&b) {
 			continue
 		}
+
 		b.DriverSpecific.Lvol.Xattrs = make(map[string]string)
+
 		user_created, err := c.BdevLvolGetXattr(b.Name, UserCreated)
 		if err == nil {
 			b.DriverSpecific.Lvol.Xattrs[UserCreated] = user_created
 		} else {
 			b.DriverSpecific.Lvol.Xattrs[UserCreated] = strconv.FormatBool(true)
 		}
+
 		snapshot_timestamp, err := c.BdevLvolGetXattr(b.Name, SnapshotTimestamp)
 		if err == nil {
 			b.DriverSpecific.Lvol.Xattrs[SnapshotTimestamp] = snapshot_timestamp
+		}
+
+		snapshot_labels, err := c.BdevLvolGetXattr(b.Name, SnapshotLabels)
+		if err == nil {
+			b.DriverSpecific.Lvol.Xattrs[SnapshotLabels] = snapshot_labels
 		}
 
 		bdevLvolInfoList = append(bdevLvolInfoList, b)
