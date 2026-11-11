@@ -73,6 +73,20 @@ func TestBdevEcRPCRequests(t *testing.T) {
 			result:     []map[string]any{},
 		},
 		{
+			name:   "BdevEcFailBaseBdev",
+			method: "bdev_ec_fail_base_bdev",
+			call: func(cli *Client) error {
+				_, err := cli.BdevEcFailBaseBdev("ec0", 3)
+				return err
+			},
+			expectKeys: map[string]any{
+				"ec_name": "ec0",
+				"slot":    float64(3),
+			},
+			absentKeys: []string{"name", "new_bdev_name"},
+			result:     map[string]any{},
+		},
+		{
 			name:   "BdevEcReplaceBaseBdev",
 			method: "bdev_ec_replace_base_bdev",
 			call: func(cli *Client) error {
